@@ -51,6 +51,20 @@ st.markdown("""
         background-color: #F1F3F4;
         border-right: 1px solid #DADCE0;
     }
+    
+    /* Bottom Navigation Bar Styling */
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #FFFFFF;
+        border-top: 1px solid #DADCE0;
+        padding: 10px 0;
+        display: flex;
+        justify-content: space-around;
+        z-index: 999;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -340,7 +354,6 @@ if selected_lang != st.session_state.get("language"):
 # --- SOOTHING INDIAN FARMER AMBIENT MUSIC PLAYER ---
 st.sidebar.markdown("---")
 st.sidebar.markdown("🎵 **Farmer Field Vibe (Bansuri / Folk)**")
-# Royalty-free soothing countryside / rural daytime ambience audio stream
 st.sidebar.audio("https://actions.google.com/sounds/v1/ambiences/country_daytime.ogg", format="audio/ogg")
 st.sidebar.caption("Relaxing rural field audio for calm farming inspection.")
 
@@ -511,3 +524,7 @@ elif app_mode == lang["tech"]:
     * **Data Privacy & Origin:** Local encrypted SQLite database storage with asynchronous background sync. **🇮🇳 Proudly Made in India**.
     """)
     st.success("Verified compliant with Technovation Girls 2027 Senior Division technical requirements.")
+
+# --- MOBILE THUMB QUICK BAR (BOTTOM NAVIGATION BAR SIMULATION) ---
+st.write("---")
+st.markdown("<p style='text-align: center; color: #5f6368; font-size: 13px;'>📱 Mobile Field Toolbar • PhytoSpore Edge v2.4 • 🇮🇳 Made in India</p>", unsafe_allow_html=True)
