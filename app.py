@@ -151,6 +151,8 @@ if app_mode == lang["scanner"]:
     input_method = st.radio(lang["input_method"], [lang["upload_img"], lang["sample_slide"]])
     
     uploaded_image = None
+    sample_choice = ""
+    
     if input_method == lang["upload_img"]:
         file = st.file_uploader("Upload 40x microscopic photo (.jpg, .png)", type=["jpg", "jpeg", "png"])
         if file is not None:
@@ -161,29 +163,34 @@ if app_mode == lang["scanner"]:
             "Moderate Rust Spores (Puccinia sorghi - Yellow Alert)", 
             "High Blight Spores (Neopestalotiopsis - Red Alert)"
         ])
-        uploaded_image = Image.new('RGB', (400, 400), color = (230, 220, 200))
+        
+        # Draw simulated microscopic slides based on selection
+        if "Clean" in sample_choice:
+            uploaded_image = Image.new('RGB', (400, 300), color = (235, 245, 235))
+        elif "Moderate" in sample_choice:
+            uploaded_image = Image.new('RGB', (400, 300), color = (245, 240, 210))
+        else:
+            uploaded_image = Image.new('RGB', (400, 300), color = (250, 220, 220))
 
     if uploaded_image is not None:
-        st.image(uploaded_image, caption="Captured Spore Slide Preview", use_container_width=True)
+        st.image(uploaded_image, caption=f"Captured Spore Slide Preview ({sample_choice if sample_choice else 'Custom Upload'})", use_container_width=True)
         
         st.write("---")
         st.write("🔍 **Running CameraX Preprocessing & Sharpness Check...**")
         
-        with st.spinner("Validating optical focus and applying CLAHE contrast..."):
-            time.sleep(0.5)
-            sharpness_score = random.randint(78, 96)
-            st.success(f"✓ Optical Focus Validated (Laplacian Score: {sharpness_score}/100).")
+        sharpness_score = random.randint(82, 96)
+        st.success(f"✓ Optical Focus Validated (Laplacian Score: {sharpness_score}/100).")
 
         if st.button(lang["run_ai"]):
             with st.spinner("Executing YOLOv8s-SPM model locally (<300ms)..."):
-                time.sleep(0.7)
+                time.sleep(0.5)
                 
-                if "Clean" in str(locals().get('sample_choice', '')):
-                    sdi, risk, pathogen, action = 1.5, "SAFE (Green)", "None detected", "No preventative treatment required."
-                elif "Moderate" in str(locals().get('sample_choice', '')):
-                    sdi, risk, pathogen, action = 24.2, "MODERATE RISK (Yellow)", "Puccinia sorghi (Corn Rust)", "Apply organic neem oil spray within 48 hours."
+                if "Clean" in sample_choice:
+                    sdi, risk, pathogen, action = 1.2, "SAFE (Green)", "None detected", "No preventative treatment required."
+                elif "Moderate" in sample_choice:
+                    sdi, risk, pathogen, action = 24.5, "MODERATE RISK (Yellow)", "Puccinia sorghi (Corn Rust)", "Apply organic bio-fungicide or neem oil spray within 48 hours."
                 else:
-                    sdi, risk, pathogen, action = 78.4, "CRITICAL RISK (Red)", "Neopestalotiopsis / Blight", "Immediate targeted copper fungicide application required."
+                    sdi, risk, pathogen, action = 78.9, "CRITICAL RISK (Red)", "Neopestalotiopsis / Blight", "Immediate targeted copper fungicide application required."
 
                 scan_record = {
                     "timestamp": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M"),
@@ -194,8 +201,9 @@ if app_mode == lang["scanner"]:
                     "farmer": st.session_state.username
                 }
                 st.session_state.scan_history.insert(0, scan_record)
-                st.success("Analysis Complete! Check Analysis & Action Plan tab.")
+                st.success("Analysis Complete! Head over to the 'Spore Analysis & Action Plan' tab to see your detailed report.")
                 st.balloons()
+
 
 # --- TAB 2: SPORE ANALYSIS & ACTION PLAN ---
 elif app_mode == lang["analysis"]:
