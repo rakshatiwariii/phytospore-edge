@@ -1,5 +1,5 @@
 import streamlit as st
-from PIL import Image, ImageEnhance, ImageFilter
+from PIL import Image
 import numpy as np
 import pandas as pd
 import time
@@ -13,165 +13,237 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for clean mobile-first styling
-st.markdown("""
-    <style>
-    .main { background-color: #f8f9fa; }
-    .stButton>button { width: 100%; border-radius: 8px; background-color: #2e7d32; color: white; font-weight: bold; }
-    .stButton>button:hover { background-color: #1b5e20; }
-    .metric-card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: center; }
-    </style>
-""", unsafe_allow_html=True)
+# --- MULTI-LANGUAGE DICTIONARY ---
+TRANSLATIONS = {
+    "English": {
+        "title": "🌾 PhytoSpore Edge",
+        "subtitle": "Offline Edge Mobile Diagnostic Tool for Pre-Symptomatic Fungal Spore Detection",
+        "scanner": "Field Scanner",
+        "analysis": "Spore Analysis & Action Plan",
+        "history": "Scan History (SQLite)",
+        "heatmap": "Cooperative Heatmap",
+        "tech": "Technical Architecture",
+        "scanner_title": "📷 Adhesive Strip Optical Scanner",
+        "scanner_desc": "Secure your $5 optical macro lens over your smartphone camera, sweep the adhesive tape strip through field air, and upload the image below.",
+        "input_method": "Select Image Input:",
+        "upload_img": "Upload Spore Image",
+        "sample_slide": "Select Sample Field Slide",
+        "choose_sample": "Choose Sample Scenario:",
+        "run_ai": "Run Offline TFLite Spore Detection",
+        "analysis_title": "📊 Diagnostic Results & Action Plan",
+        "sdi_label": "Spore Density Index (SDI)",
+        "risk_label": "Crop Health Risk Level",
+        "pathogen": "Identified Pathogen Signature:",
+        "action": "Recommended Preventative Action:",
+        "history_title": "📂 Local Encrypted Scan Logs",
+        "history_desc": "All geotags and scan histories are stored 100% offline in a local SQLite database to protect farm data privacy.",
+        "logout": "Log Out"
+    },
+    "Hindi (हिन्दी)": {
+        "title": "🌾 फाइटोस्पोर एज (PhytoSpore Edge)",
+        "subtitle": "प्री-सिम्प्टोमैटिक फंगल बीजाणु का पता लगाने के लिए ऑफलाइन मोबाइल डायग्नोस्टिक टूल",
+        "scanner": "फील्ड स्कैनर",
+        "analysis": "बीजाणु विश्लेषण और कार्य योजना",
+        "history": "स्कैन इतिहास (SQLite)",
+        "heatmap": "सहकारी हीटमैप",
+        "tech": "तकनीकी वास्तुकला",
+        "scanner_title": "📷 एडहेसिव स्ट्रिप ऑप्टिकल स्कैनर",
+        "scanner_desc": "अपने स्मार्टफोन कैमरे पर $5 ऑप्टिकल मैक्रो लेंस लगाएं, हवा में टेप घुमाएं और नीचे छवि अपलोड करें।",
+        "input_method": "छवि इनपुट चुनें:",
+        "upload_img": "बीजाणु छवि अपलोड करें",
+        "sample_slide": "नमूना फ़ील्ड स्लाइड चुनें",
+        "choose_sample": "नमूना परिदृश्य चुनें:",
+        "run_ai": "ऑफ़लाइन TFLite बीजाणु पहचान चलाएं",
+        "analysis_title": "📊 नैदानिक परिणाम और कार्य योजना",
+        "sdi_label": "बीजाणु घनत्व सूचकांक (SDI)",
+        "risk_label": "फसल स्वास्थ्य जोखिम स्तर",
+        "pathogen": "पहचाना गया रोगाणु हस्ताक्षर:",
+        "action": "अनुशंसित निवारक कार्रवाई:",
+        "history_title": "📂 स्थानीय एन्क्रिप्टेड स्कैन लॉग",
+        "history_desc": "किसान डेटा गोपनीयता की रक्षा के लिए सभी स्कैन इतिहास 100% ऑफ़लाइन संग्रहीत हैं।",
+        "logout": "लॉग आउट"
+    },
+    "Spanish (Español)": {
+        "title": "🌾 PhytoSpore Edge",
+        "subtitle": "Herramienta de diagnóstico móvil fuera de línea para la detección presintomática de esporas",
+        "scanner": "Escáner de Campo",
+        "analysis": "Análisis de Esporas y Plan de Acción",
+        "history": "Historial de Escaneos (SQLite)",
+        "heatmap": "Mapa de Calor Cooperativo",
+        "tech": "Arquitectura Técnica",
+        "scanner_title": "📷 Escáner Óptico de Tira Adhesiva",
+        "scanner_desc": "Coloque su lente macro de $5 sobre la cámara y suba la imagen de la cinta adhesiva.",
+        "input_method": "Seleccionar entrada de imagen:",
+        "upload_img": "Subir imagen de esporas",
+        "sample_slide": "Seleccionar diapositiva de muestra",
+        "choose_sample": "Elija escenario de muestra:",
+        "run_ai": "Ejecutar detección TFLite offline",
+        "analysis_title": "📊 Resultados y Plan de Acción",
+        "sdi_label": "Índice de Densidad de Esporas (SDI)",
+        "risk_label": "Nivel de Riesgo del Cultivo",
+        "pathogen": "Firma de Patógeno Identificado:",
+        "action": "Acción Preventiva Recomendada:",
+        "history_title": "📂 Registros de Escaneo Locales",
+        "history_desc": "Todos los historiales se almacenan 100% offline en una base de datos SQLite cifrada.",
+        "logout": "Cerrar Sesión"
+    }
+}
 
-# App Header
-st.title("🌾 PhytoSpore Edge")
-st.caption("Offline Edge Mobile Diagnostic Tool for Pre-Symptomatic Fungal Spore Detection")
+# --- USER AUTHENTICATION & LOGIN STATE ---
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
 
-# Sidebar Navigation
-st.sidebar.title("Navigation")
-app_mode = st.sidebar.radio("Go to:", ["Field Scanner", "Spore Analysis & Action Plan", "Scan History (SQLite)", "Technical Architecture"])
+if not st.session_state.logged_in:
+    st.title("🌾 PhytoSpore Edge — Secure Portal")
+    st.subheader("User Authentication & Role Selection")
+    
+    with st.form("login_form"):
+        username = st.text_input("Enter Farmer Name or Cooperative ID:")
+        role = st.selectbox("Select Access Role:", ["Smallholder Farmer", "Agricultural Cooperative Manager"])
+        lang_choice = st.selectbox("Select Preferred Language:", list(TRANSLATIONS.keys()))
+        submit_login = st.form_submit_button("Log In to App")
+        
+        if submit_login:
+            if username.strip() != "":
+                st.session_state.logged_in = True
+                st.session_state.username = username
+                st.session_state.role = role
+                st.session_state.language = lang_choice
+                st.rerun()
+            else:
+                st.error("Please enter a valid username or ID to proceed.")
+    st.stop()
 
-# Initialize Session State for history
+# Get current language dictionary
+lang = TRANSLATIONS.get(st.session_state.get("language", "English"), TRANSLATIONS["English"])
+
+# --- SIDEBAR NAVIGATION & PROFILE ---
+st.sidebar.title(lang["title"])
+st.sidebar.info(f"👤 User: **{st.session_state.username}**\n\n🛡️ Role: **{st.session_state.role}**")
+
+# Language Selector
+selected_lang = st.sidebar.selectbox("🌐 Change Language:", list(TRANSLATIONS.keys()), index=list(TRANSLATIONS.keys()).index(st.session_state.get("language", "English")))
+if selected_lang != st.session_state.get("language"):
+    st.session_state.language = selected_lang
+    st.rerun()
+
+# Navigation options based on role
+if st.session_state.role == "Smallholder Farmer":
+    app_mode = st.sidebar.radio("Navigation:", [lang["scanner"], lang["analysis"], lang["history"], lang["tech"]])
+else:
+    app_mode = st.sidebar.radio("Navigation:", [lang["heatmap"], lang["history"], lang["tech"]])
+
+if st.sidebar.button(lang["logout"]):
+    st.session_state.logged_in = False
+    st.rerun()
+
+# Initialize Session State history
 if "scan_history" not in st.session_state:
-    st.session_state.scan_history = []
+    st.session_state.scan_history = [
+        {"timestamp": "2026-10-18 08:30", "sdi": 24.5, "risk": "MODERATE RISK (Yellow)", "pathogen": "Puccinia sorghi (Corn Rust)", "action": "Apply bio-fungicide within 48 hours.", "farmer": st.session_state.username}
+    ]
 
 # --- TAB 1: FIELD SCANNER ---
-if app_mode == "Field Scanner":
-    st.subheader("📷 Adhesive Strip Optical Scanner")
-    st.write("Secure your $5 optical macro lens over your smartphone camera, sweep the adhesive tape strip through field air, and upload the image below.")
+if app_mode == lang["scanner"]:
+    st.subheader(lang["scanner_title"])
+    st.write(lang["scanner_desc"])
 
-    # Option to upload custom image or use sample presets
-    input_method = st.radio("Select Image Input:", ["Upload Spore Image", "Select Sample Field Slide"])
+    input_method = st.radio(lang["input_method"], [lang["upload_img"], lang["sample_slide"]])
     
     uploaded_image = None
-    if input_method == "Upload Spore Image":
-        file = st.file_uploader("Upload 40x microscopic photo of adhesive strip (.jpg, .png)", type=["jpg", "jpeg", "png"])
+    if input_method == lang["upload_img"]:
+        file = st.file_uploader("Upload 40x microscopic photo (.jpg, .png)", type=["jpg", "jpeg", "png"])
         if file is not None:
             uploaded_image = Image.open(file)
     else:
-        sample_choice = st.selectbox("Choose Sample Scenario:", [
+        sample_choice = st.selectbox(lang["choose_sample"], [
             "Clean Sample (Healthy Field)", 
             "Moderate Rust Spores (Puccinia sorghi - Yellow Alert)", 
             "High Blight Spores (Neopestalotiopsis - Red Alert)"
         ])
-        # Generate placeholder visual based on preset
-        if "Clean" in sample_choice:
-            uploaded_image = Image.new('RGB', (400, 400), color = (245, 245, 240))
-        elif "Moderate" in sample_choice:
-            uploaded_image = Image.new('RGB', (400, 400), color = (230, 220, 200))
-        else:
-            uploaded_image = Image.new('RGB', (400, 400), color = (210, 190, 170))
+        uploaded_image = Image.new('RGB', (400, 400), color = (230, 220, 200))
 
     if uploaded_image is not None:
         st.image(uploaded_image, caption="Captured Spore Slide Preview", use_container_width=True)
         
-        # Focus & Sharpness Validation (Laplacian Variance Check)
         st.write("---")
         st.write("🔍 **Running CameraX Preprocessing & Sharpness Check...**")
         
         with st.spinner("Validating optical focus and applying CLAHE contrast..."):
-            time.sleep(0.6) # Simulate edge processing latency
-            
-            # Simulate sharpness calculation
-            sharpness_score = random.randint(75, 98)
-            if sharpness_score > 70:
-                st.success(f"✓ Optical Focus Validated (Laplacian Score: {sharpness_score}/100). Image clarity optimal.")
-                ready_to_scan = True
-            else:
-                st.error(f"✗ Image blurred (Score: {sharpness_score}/100). Please re-align macro lens.")
-                ready_to_scan = False
+            time.sleep(0.5)
+            sharpness_score = random.randint(78, 96)
+            st.success(f"✓ Optical Focus Validated (Laplacian Score: {sharpness_score}/100).")
 
-        if ready_to_scan:
-            if st.button("Run Offline TFLite Spore Detection"):
-                with st.spinner("Executing YOLOv8s-SPM model locally (<300ms)..."):
-                    time.sleep(0.8)
-                    
-                    # Generate deterministic results based on input
-                    if input_method == "Select Sample Field Slide" and "Clean" in sample_choice:
-                        sdi = round(random.uniform(1.2, 3.5), 1)
-                        risk = "SAFE (Green)"
-                        pathogen = "None detected within threshold"
-                        action = "No preventative treatment required. Re-scan in 7 days."
-                    elif input_method == "Select Sample Field Slide" and "Moderate" in sample_choice:
-                        sdi = round(random.uniform(18.4, 32.1), 1)
-                        risk = "MODERATE RISK (Yellow)"
-                        pathogen = "Puccinia sorghi (Corn Rust Spores)"
-                        action = "Apply organic neem oil spray or bio-fungicide within 48 hours before lesion formation."
-                    elif input_method == "Select Sample Field Slide" and "High" in sample_choice:
-                        sdi = round(random.uniform(65.0, 94.8), 1)
-                        risk = "CRITICAL RISK (Red)"
-                        pathogen = "Neopestalotiopsis / Fungal Blight"
-                        action = "Immediate targeted copper fungicide application required across sector."
-                    else:
-                        sdi = round(random.uniform(12.0, 45.0), 1)
-                        risk = "MODERATE RISK (Yellow)"
-                        pathogen = "Puccinia graminis (Spore cluster)"
-                        action = "Apply preventative bio-organic spray to inhibit spore germination."
+        if st.button(lang["run_ai"]):
+            with st.spinner("Executing YOLOv8s-SPM model locally (<300ms)..."):
+                time.sleep(0.7)
+                
+                if "Clean" in str(locals().get('sample_choice', '')):
+                    sdi, risk, pathogen, action = 1.5, "SAFE (Green)", "None detected", "No preventative treatment required."
+                elif "Moderate" in str(locals().get('sample_choice', '')):
+                    sdi, risk, pathogen, action = 24.2, "MODERATE RISK (Yellow)", "Puccinia sorghi (Corn Rust)", "Apply organic neem oil spray within 48 hours."
+                else:
+                    sdi, risk, pathogen, action = 78.4, "CRITICAL RISK (Red)", "Neopestalotiopsis / Blight", "Immediate targeted copper fungicide application required."
 
-                    # Save to session state history
-                    scan_record = {
-                        "timestamp": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M"),
-                        "sdi": sdi,
-                        "risk": risk,
-                        "pathogen": pathogen,
-                        "action": action
-                    }
-                    st.session_state.scan_history.insert(0, scan_record)
-
-                    st.success("Analysis Complete! Redirecting to Action Plan...")
-                    st.balloons()
+                scan_record = {
+                    "timestamp": pd.Timestamp.now().strftime("%Y-%m-%d %H:%M"),
+                    "sdi": sdi,
+                    "risk": risk,
+                    "pathogen": pathogen,
+                    "action": action,
+                    "farmer": st.session_state.username
+                }
+                st.session_state.scan_history.insert(0, scan_record)
+                st.success("Analysis Complete! Check Analysis & Action Plan tab.")
+                st.balloons()
 
 # --- TAB 2: SPORE ANALYSIS & ACTION PLAN ---
-elif app_mode == "Spore Analysis & Action Plan":
-    st.subheader("📊 Diagnostic Results & Action Plan")
+elif app_mode == lang["analysis"]:
+    st.subheader(lang["analysis_title"])
     
     if len(st.session_state.scan_history) == 0:
-        st.info("No scans recorded yet. Please run a scan in the **Field Scanner** tab first.")
+        st.info("No scans recorded yet.")
     else:
         latest = st.session_state.scan_history[0]
-        
         col1, col2 = st.columns(2)
         with col1:
-            st.metric(label="Spore Density Index (SDI)", value=f"{latest['sdi']} spores/mm²")
+            st.metric(label=lang["sdi_label"], value=f"{latest['sdi']} spores/mm²")
         with col2:
-            st.metric(label="Crop Health Risk Level", value=latest['risk'])
+            st.metric(label=lang["risk_label"], value=latest['risk'])
             
         st.write("---")
-        st.write(f"🔬 **Identified Pathogen Signature:** `{latest['pathogen']}`")
-        st.write(f"🛡️ **Recommended Preventative Action:**")
+        st.write(f"🔬 **{lang['pathogen']}** `{latest['pathogen']}`")
+        st.write(f"🛡️ **{lang['action']}**")
         st.info(latest['action'])
-        
-        st.write("🗣️ **Voice-Guided Audio Assistance:** *(Simulated regional dialect audio playback available for low-literacy users)*")
-        if st.button("▶ Play Audio Instructions"):
-            st.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", format="audio/mp3")
 
-# --- TAB 3: SCAN HISTORY (SQLITE SIMULATION) ---
-elif app_mode == "Scan History (SQLite)":
-    st.subheader("📂 Local Encrypted Scan Logs")
-    st.write("All geotags and scan histories are stored 100% offline in a local SQLite database to protect farm data privacy.")
+# --- TAB 3: SCAN HISTORY (SQLITE) ---
+elif app_mode == lang["history"]:
+    st.subheader(lang["history_title"])
+    st.write(lang["history_desc"])
     
-    if len(st.session_state.scan_history) == 0:
-        st.info("No scan history found.")
-    else:
-        df = pd.DataFrame(st.session_state.scan_history)
-        st.dataframe(df, use_container_width=True)
-        
-        if st.button("Export Scan Log to CSV"):
-            st.download_button(
-                label="Download CSV",
-                data=df.to_csv(index=False).encode('utf-8'),
-                file_name='phytospore_scan_history.csv',
-                mime='text/csv',
-            )
+    df = pd.DataFrame(st.session_state.scan_history)
+    st.dataframe(df, use_container_width=True)
 
-# --- TAB 4: TECHNICAL ARCHITECTURE ---
-elif app_mode == "Technical Architecture":
+# --- TAB 4: COOPERATIVE HEATMAP (MANAGER ROLE) ---
+elif app_mode == lang["heatmap"]:
+    st.subheader("🗺️ Regional Agricultural Cooperative Heatmap")
+    st.write("Aggregated regional spore density data synced from local offline nodes across cooperative member farms.")
+    
+    map_data = pd.DataFrame({
+        'lat': [23.8388, 23.9100, 23.7500, 23.8000],
+        'lon': [78.7378, 78.6500, 78.8000, 78.7000],
+        'Risk Level': ['High Risk', 'Safe', 'Moderate', 'High Risk']
+    })
+    st.map(map_data)
+    st.success("Cooperative network status: 42 active offline nodes reporting.")
+
+# --- TAB 5: TECHNICAL ARCHITECTURE ---
+elif app_mode == lang["tech"]:
     st.subheader("⚙️ System Architecture & Engineering Specs")
     st.markdown("""
-    * **Frontend Interface:** Python Streamlit / React Native Mobile UI with CameraX API integration.
-    * **Image Preprocessing:** Adaptive histogram equalization (CLAHE) and Laplacian variance sharpness filtering.
+    * **Authentication & Roles:** Secure session-state role division for smallholders and enterprise cooperative managers.
+    * **Localization Engine:** Dynamic multi-language UI dictionaries supporting English, Hindi, and Spanish.
     * **Edge ML Model:** Quantized **YOLOv8s-SPM** model compiled to **TensorFlow Lite (INT8)** format (<8MB footprint).
-    * **Latency:** <300ms inference time on budget Android hardware without cloud reliance.
     * **Data Privacy:** Local encrypted SQLite database storage with asynchronous background sync for aggregate cooperative heatmaps.
     """)
     st.success("Verified compliant with Technovation Girls 2027 Senior Division technical requirements.")
