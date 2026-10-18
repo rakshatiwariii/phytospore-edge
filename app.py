@@ -161,7 +161,7 @@ TRANSLATIONS = {
     }
 }
 
-# --- USER AUTHENTICATION & LOGIN STATE ---
+# --- USER AUTHENTICATION & SECURE PORTAL ---
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
@@ -174,22 +174,56 @@ if not st.session_state.logged_in:
         st.caption("Pre-Symptomatic Crop Defense • Zero Cloud, Total Privacy")
 
     st.write("---")
-    with st.form("login_form"):
-        st.subheader("🔐 Secure Portal Login")
-        username = st.text_input("Enter Farmer Name or Cooperative ID:")
-        role = st.selectbox("Select Access Role:", ["Smallholder Farmer", "Agricultural Cooperative Manager"])
-        lang_choice = st.selectbox("Select Preferred Language / भाषा:", list(TRANSLATIONS.keys()))
-        submit_login = st.form_submit_button("Launch Application 🚀", use_container_width=True)
+    
+    # Auth Tabs (Sign In / Sign Up)
+    auth_mode = st.radio("Authentication Method:", ["🔑 Sign In", "📝 Create Account (Sign Up)"], horizontal=True)
+    
+    # Quick Social Logins simulation
+    st.write("")
+    col_g, col_a = st.columns(2)
+    with col_g:
+        if st.button("🌐 Continue with Google", use_container_width=True):
+            st.session_state.logged_in = True
+            st.session_state.username = "Google Farmer User"
+            st.session_state.role = "Smallholder Farmer"
+            st.session_state.language = "English"
+            st.rerun()
+    with col_a:
+        if st.button("🍏 Continue with Apple", use_container_width=True):
+            st.session_state.logged_in = True
+            st.session_state.username = "Apple Farmer User"
+            st.session_state.role = "Smallholder Farmer"
+            st.session_state.language = "English"
+            st.rerun()
 
-        if submit_login:
-            if username.strip() != "":
+    st.markdown("<p style='text-align: center; color: #5f6368; margin: 10px 0;'>or with email & role setup</p>", unsafe_allow_html=True)
+
+    with st.form("auth_form"):
+        if auth_mode == "🔑 Sign In":
+            st.subheader("Welcome Back")
+            username_input = st.text_input("Farmer Name, Email, or Cooperative ID:")
+            password_input = st.text_input("Password:", type="password")
+            role = st.selectbox("Select Role:", ["Smallholder Farmer", "Agricultural Cooperative Manager"])
+            lang_choice = st.selectbox("Preferred Language / भाषा:", list(TRANSLATIONS.keys()))
+            submit_btn = st.form_submit_button("Sign In 🚀", use_container_width=True)
+        else:
+            st.subheader("Create New Account")
+            username_input = st.text_input("Full Name or Farm ID:")
+            email_input = st.text_input("Email Address:")
+            password_input = st.text_input("Create Password:", type="password")
+            role = st.selectbox("Select Role:", ["Smallholder Farmer", "Agricultural Cooperative Manager"])
+            lang_choice = st.selectbox("Preferred Language / भाषा:", list(TRANSLATIONS.keys()))
+            submit_btn = st.form_submit_button("Register & Launch 🚀", use_container_width=True)
+
+        if submit_btn:
+            if username_input.strip() != "":
                 st.session_state.logged_in = True
-                st.session_state.username = username
+                st.session_state.username = username_input
                 st.session_state.role = role
                 st.session_state.language = lang_choice
                 st.rerun()
             else:
-                st.error("Please enter a valid username or ID to proceed.")
+                st.error("Please provide valid login details to proceed.")
     st.stop()
 
 # Get current language dictionary
