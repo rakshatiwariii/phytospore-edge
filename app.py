@@ -13,6 +13,47 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# --- WORLD-CLASS GOOGLE-INSPIRED THEME & GREENS STYLING ---
+st.markdown("""
+    <style>
+    /* Global Background and Typography */
+    .stApp {
+        background-color: #F8F9FA;
+        color: #202124;
+    }
+    
+    /* Clean Card Containers */
+    .metric-card {
+        background-color: #FFFFFF;
+        border: 1px solid #DADCE0;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    /* Primary Buttons Styled Cleanly in Forest Green */
+    .stButton>button {
+        background-color: #137333;
+        color: white;
+        border-radius: 8px;
+        border: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        transition: background-color 0.2s;
+    }
+    .stButton>button:hover {
+        background-color: #0b511f;
+        color: white;
+    }
+
+    /* Sidebar Styling */
+    section[data-testid="stSidebar"] {
+        background-color: #F1F3F4;
+        border-right: 1px solid #DADCE0;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 # --- SPLASH / LOADING INTERFACE ---
 if "app_loaded" not in st.session_state:
     st.session_state.app_loaded = False
@@ -20,16 +61,16 @@ if "app_loaded" not in st.session_state:
 if not st.session_state.app_loaded:
     splash = st.empty()
     with splash.container():
-        st.markdown("<h1 style='text-align: center;'>🌾 PhytoSpore Edge</h1>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center; color: gray;'>World-Class Offline Agricultural Intelligence</p>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align: center; color: #137333;'>🌾 PhytoSpore Edge</h1>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center; color: #5f6368;'>Zero-Cloud Offline Agricultural Intelligence</p>", unsafe_allow_html=True)
         
         progress_bar = st.progress(0)
         status_text = st.empty()
         
         loading_steps = [
-            ("Optimizing Quantized TFLite Edge Weights...", 0.25),
-            ("Calibrating CameraX Macro Focus Engine...", 0.50),
-            ("Mounting Encrypted Zero-Cloud SQLite Vault...", 0.75),
+            ("Initializing Quantized TFLite Engine...", 0.25),
+            ("Calibrating CameraX Focus Matrix...", 0.50),
+            ("Mounting Local Encrypted SQLite Vault...", 0.75),
             ("System Ready.", 1.0)
         ]
         
@@ -125,12 +166,12 @@ if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
 if not st.session_state.logged_in:
-    col_logo, col_title = st.columns([1, 4])
+    col_logo, col_title = st.columns([1, 5])
     with col_logo:
-        st.markdown("<h1 style='font-size: 60px; margin: 0;'>🌾</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='font-size: 55px; margin: 0; color: #137333;'>🌾</h1>", unsafe_allow_html=True)
     with col_title:
         st.title("PhytoSpore Edge")
-        st.caption("Pre-Symptomatic Crop Defense System • Zero Cloud, Total Privacy")
+        st.caption("Pre-Symptomatic Crop Defense • Zero Cloud, Total Privacy")
 
     st.write("---")
     with st.form("login_form"):
@@ -242,28 +283,38 @@ if app_mode == lang["scanner"]:
                 st.balloons()
 
 
-# --- TAB 2: FARMER QUICK GUIDE (WORLD-CLASS UI CARDS) ---
+# --- TAB 2: FARMER QUICK GUIDE (GOOGLE-INSPIRED CARDS) ---
 elif app_mode == lang["guide"]:
     st.subheader("🌾 Farmer Quick Guide: Field-Ready in 3 Simple Steps")
-    st.write("No internet required. Use this guide right in your field to catch crop diseases days *before* visible leaf spots appear.")
+    st.write("No internet required. Use this clean guide right in your field to catch crop diseases days *before* visible leaf spots appear.")
 
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("### Step 1 🔍")
-        st.markdown("**Attach Macro Lens**")
-        st.write("Clip your affordable $5 optical macro lens directly over your smartphone's primary camera lens.")
+        st.markdown("""
+            <div style="background-color: white; border: 1px solid #DADCE0; border-radius: 10px; padding: 15px; height: 160px;">
+                <h4 style="color: #137333; margin-top: 0;">Step 1 🔍</h4>
+                <p style="font-size: 14px; color: #5f6368;"><b>Attach Macro Lens</b><br>Clip your affordable $5 optical macro lens over your phone camera.</p>
+            </div>
+        """, unsafe_allow_html=True)
     
     with col2:
-        st.markdown("### Step 2 🌬️")
-        st.markdown("**Air Sweep**")
-        st.write("Wave an adhesive tape strip through your crop canopy to capture invisible airborne fungal spores.")
+        st.markdown("""
+            <div style="background-color: white; border: 1px solid #DADCE0; border-radius: 10px; padding: 15px; height: 160px;">
+                <h4 style="color: #137333; margin-top: 0;">Step 2 🌬️</h4>
+                <p style="font-size: 14px; color: #5f6368;"><b>Air Sweep</b><br>Wave an adhesive tape strip through your crop canopy to capture spores.</p>
+            </div>
+        """, unsafe_allow_html=True)
 
     with col3:
-        st.markdown("### Step 3 ⚡")
-        st.markdown("**Instant Scan**")
-        st.write("Open this app, snap or upload the slide, and let the offline AI instantly diagnose your crop health risk.")
+        st.markdown("""
+            <div style="background-color: white; border: 1px solid #DADCE0; border-radius: 10px; padding: 15px; height: 160px;">
+                <h4 style="color: #137333; margin-top: 0;">Step 3 ⚡</h4>
+                <p style="font-size: 14px; color: #5f6368;"><b>Instant Scan</b><br>Open this app, snap the slide, and let offline AI diagnose your crop health.</p>
+            </div>
+        """, unsafe_allow_html=True)
 
+    st.write("")
     st.info("💡 **Pro Tip for Smallholders:** Run tests early in the morning when dew settles or during heavy wind flows for the most accurate spore density readings.")
 
 
