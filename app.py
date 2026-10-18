@@ -354,8 +354,10 @@ if selected_lang != st.session_state.get("language"):
 # --- SOOTHING INDIAN FARMER AMBIENT MUSIC PLAYER ---
 st.sidebar.markdown("---")
 st.sidebar.markdown("🎵 **Farmer Field Vibe (Bansuri / Folk)**")
-st.sidebar.audio("https://actions.google.com/sounds/v1/ambiences/country_daytime.ogg", format="audio/ogg")
+# Using a direct, reliable public MP3 stream that enables play controls on mobile
+st.sidebar.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", format="audio/mp3")
 st.sidebar.caption("Relaxing rural field audio for calm farming inspection.")
+
 
 # Navigation options based on role
 if st.session_state.role == "Smallholder Farmer":
