@@ -62,7 +62,7 @@ if not st.session_state.app_loaded:
     splash = st.empty()
     with splash.container():
         st.markdown("<h1 style='text-align: center; color: #137333;'>🌾 PhytoSpore Edge</h1>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center; color: #5f6368;'>Zero-Cloud Offline Agricultural Intelligence</p>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center; color: #5f6368;'>Zero-Cloud Offline Agricultural Intelligence • 🇮🇳 Made in India</p>", unsafe_allow_html=True)
         
         progress_bar = st.progress(0)
         status_text = st.empty()
@@ -271,7 +271,7 @@ if not st.session_state.logged_in:
         st.markdown("<h1 style='font-size: 55px; margin: 0; color: #137333;'>🌾</h1>", unsafe_allow_html=True)
     with col_title:
         st.title("PhytoSpore Edge")
-        st.caption("Pre-Symptomatic Crop Defense • Zero Cloud, Total Privacy")
+        st.caption("Pre-Symptomatic Crop Defense • Zero Cloud, Total Privacy • 🇮🇳 Made in India")
 
     st.write("---")
     
@@ -337,6 +337,13 @@ if selected_lang != st.session_state.get("language"):
     st.session_state.language = selected_lang
     st.rerun()
 
+# --- SOOTHING INDIAN FARMER AMBIENT MUSIC PLAYER ---
+st.sidebar.markdown("---")
+st.sidebar.markdown("🎵 **Farmer Field Vibe (Bansuri / Folk)**")
+# Royalty-free soothing countryside / rural daytime ambience audio stream
+st.sidebar.audio("https://actions.google.com/sounds/v1/ambiences/country_daytime.ogg", format="audio/ogg")
+st.sidebar.caption("Relaxing rural field audio for calm farming inspection.")
+
 # Navigation options based on role
 if st.session_state.role == "Smallholder Farmer":
     app_mode = st.sidebar.radio("Navigation:", [lang["scanner"], lang["guide"], lang["analysis"], lang["history"], lang["tech"]])
@@ -344,6 +351,7 @@ else:
     app_mode = st.sidebar.radio("Navigation:", [lang["heatmap"], lang["history"], lang["tech"]])
 
 st.sidebar.write("---")
+st.sidebar.markdown("🇮🇳 **Proudly Made in India**")
 if st.sidebar.button(lang["logout"], use_container_width=True):
     st.session_state.logged_in = False
     st.rerun()
@@ -500,6 +508,6 @@ elif app_mode == lang["tech"]:
     * **Authentication & Roles:** Secure session-state role division for smallholders and enterprise cooperative managers.
     * **Localization Engine:** Dynamic multi-language UI dictionaries supporting 7 global languages (English, Hindi, Spanish, German, French, Portuguese, Japanese).
     * **Edge ML Model:** Quantized **YOLOv8s-SPM** model compiled to **TensorFlow Lite (INT8)** format (<8MB footprint).
-    * **Data Privacy:** Local encrypted SQLite database storage with asynchronous background sync for aggregate cooperative heatmaps.
+    * **Data Privacy & Origin:** Local encrypted SQLite database storage with asynchronous background sync. **🇮🇳 Proudly Made in India**.
     """)
     st.success("Verified compliant with Technovation Girls 2027 Senior Division technical requirements.")
