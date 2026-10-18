@@ -82,7 +82,7 @@ if not st.session_state.app_loaded:
     st.session_state.app_loaded = True
     splash.empty()
 
-# --- MULTI-LANGUAGE DICTIONARY ---
+# --- 7-LANGUAGE DICTIONARY ---
 TRANSLATIONS = {
     "English": {
         "title": "🌾 PhytoSpore Edge",
@@ -158,6 +158,106 @@ TRANSLATIONS = {
         "history_title": "📂 Registros de Escaneo Locales",
         "history_desc": "Todos los registros se almacenan 100% offline para proteger su privacidad.",
         "logout": "Cerrar Sesión"
+    },
+    "German (Deutsch)": {
+        "title": "🌾 PhytoSpore Edge",
+        "subtitle": "Mobiles Offline-Diagnosetool zur präsymptomatischen Pilzsporenerkennung",
+        "scanner": "Feldscanner",
+        "guide": "🌾 Landwirt-Kurzanleitung",
+        "analysis": "Sporenanalyse & Maßnahmenplan",
+        "history": "Scan-Verlauf (SQLite)",
+        "heatmap": "Genossenschafts-Heatmap",
+        "tech": "Technische Architektur",
+        "scanner_title": "📷 Klebestreifen-Optikscanner",
+        "scanner_desc": "Befestigen Sie die 5$-Makrolinse an Ihrer Handykamera, ziehen Sie den Klebestreifen durch das Feld und scannen Sie.",
+        "input_method": "Eingabemethode wählen:",
+        "upload_img": "Mikroskopisches Sporenfoto hochladen",
+        "sample_slide": "Feldszenario auswählen",
+        "choose_sample": "Szenario wählen:",
+        "run_ai": "Offline TFLite Sporenerkennung starten",
+        "analysis_title": "📊 Diagnoseergebnisse & Maßnahmen",
+        "sdi_label": "Sporendichte-Index (SDI)",
+        "risk_label": "Risikostufe der Pflanzengesundheit",
+        "pathogen": "Identifizierte Pathogensignatur:",
+        "action": "Empfohlene vorbeugende Maßnahme:",
+        "history_title": "📂 Lokale verschlüsselte Scan-Protokolle",
+        "history_desc": "Alle Daten bleiben 100% offline auf Ihrem Gerät zum Schutz Ihrer Privatsphäre.",
+        "logout": "Abmelden"
+    },
+    "French (Français)": {
+        "title": "🌾 PhytoSpore Edge",
+        "subtitle": "Outil de diagnostic mobile hors ligne pour la détection pré-symptomatique des spores",
+        "scanner": "Scanner de Terrain",
+        "guide": "🌾 Guide Rapide de l'Agriculteur",
+        "analysis": "Analyse des Spores & Plan d'Action",
+        "history": "Historique des Scans (SQLite)",
+        "heatmap": "Carte Thermique Coopérative",
+        "tech": "Architecture Technique",
+        "scanner_title": "📷 Scanner Optique à Bande Adhésive",
+        "scanner_desc": "Fixez votre macro-lentille 5$ sur votre téléphone, passez la bande adhésive sur la culture et analysez.",
+        "input_method": "Sélectionner la méthode d'entrée :",
+        "upload_img": "Téléerger une photo microscopique",
+        "sample_slide": "Sélectionner un scénario de terrain",
+        "choose_sample": "Choisir le scénario :",
+        "run_ai": "Exécuter la détection TFLite hors ligne",
+        "analysis_title": "📊 Résultats et Plan d'Action",
+        "sdi_label": "Indice de Densité de Spores (SDI)",
+        "risk_label": "Niveau de Risque des Cultures",
+        "pathogen": "Signature du Pathogène Identifié :",
+        "action": "Action Préventive Recommandée :",
+        "history_title": "📂 Journaux de Scan Chiffrés Locaux",
+        "history_desc": "Toutes les données restent 100% hors ligne pour protéger la confidentialité.",
+        "logout": "Se Déconnecter"
+    },
+    "Portuguese (Português)": {
+        "title": "🌾 PhytoSpore Edge",
+        "subtitle": "Ferramenta de diagnóstico móvel offline para detecção pré-sintomática de esporos",
+        "scanner": "Scanner de Campo",
+        "guide": "🌾 Guia Rápido do Agricultor",
+        "analysis": "Análise de Esporos e Plano de Ação",
+        "history": "Histórico de Escaneamentos (SQLite)",
+        "heatmap": "Mapa de Calor Cooperativo",
+        "tech": "Arquitetura Técnica",
+        "scanner_title": "📷 Scanner Óptico de Fita Adesiva",
+        "scanner_desc": "Encaixe sua macro lente de $5 na câmera do celular, passe a fita adesiva na plantação e inspecione.",
+        "input_method": "Selecionar método de entrada de imagem:",
+        "upload_img": "Enviar foto microscópica de esporos",
+        "sample_slide": "Selecionar lâmina de amostra",
+        "choose_sample": "Escolher cenário de campo:",
+        "run_ai": "Executar detecção de esporos TFLite offline",
+        "analysis_title": "📊 Resultados Diagnósticos e Plano de Ação",
+        "sdi_label": "Índice de Densidade de Esporos (SDI)",
+        "risk_label": "Nível de Risco da Saúde da Cultura",
+        "pathogen": "Assinatura do Patógeno Identificado:",
+        "action": "Ação Preventiva Recomendada:",
+        "history_title": "📂 Registros de Escaneamento Locais Criptografados",
+        "history_desc": "Todos os registros ficam 100% offline para proteger sua privacidade.",
+        "logout": "Sair"
+    },
+    "Japanese (日本語)": {
+        "title": "🌾 PhytoSpore Edge",
+        "subtitle": "糸状菌胞子の発症前検出のためのオフラインモバイル診断ツール",
+        "scanner": "フィールドスキャナー",
+        "guide": "🌾 農家向けクイックガイド",
+        "analysis": "胞子分析とアクションプラン",
+        "history": "スキャン履歴 (SQLite)",
+        "heatmap": "協同組合ヒートマップ",
+        "tech": "技術アーキテクチャ",
+        "scanner_title": "📷 粘着ストリップ光学スキャナー",
+        "scanner_desc": "5ドルの光学マクロレンズをスマホカメラに取り付け、作物キャノピーでテープをスワイプします。",
+        "input_method": "画像入力方法の選択:",
+        "upload_img": "顕微鏡胞子写真をアップロード",
+        "sample_slide": "サンプルフィールドスライドを選択",
+        "choose_sample": "フィールドシナリオの選択:",
+        "run_ai": "オフラインTFLite胞子検出を実行",
+        "analysis_title": "📊 診断結果とアクションプラン",
+        "sdi_label": "胞子密度指数 (SDI)",
+        "risk_label": "作物健康リスクレベル",
+        "pathogen": "特定された病原体シグネチャ:",
+        "action": "推奨される予防措置:",
+        "history_title": "📂 ローカル暗号化スキャンログ",
+        "history_desc": "農家のプライバシーを守るため、すべてのデータは100%オフラインで保存されます。",
+        "logout": "ログアウト"
     }
 }
 
@@ -175,10 +275,8 @@ if not st.session_state.logged_in:
 
     st.write("---")
     
-    # Auth Tabs (Sign In / Sign Up)
     auth_mode = st.radio("Authentication Method:", ["🔑 Sign In", "📝 Create Account (Sign Up)"], horizontal=True)
     
-    # Quick Social Logins simulation
     st.write("")
     col_g, col_a = st.columns(2)
     with col_g:
@@ -204,7 +302,7 @@ if not st.session_state.logged_in:
             username_input = st.text_input("Farmer Name, Email, or Cooperative ID:")
             password_input = st.text_input("Password:", type="password")
             role = st.selectbox("Select Role:", ["Smallholder Farmer", "Agricultural Cooperative Manager"])
-            lang_choice = st.selectbox("Preferred Language / भाषा:", list(TRANSLATIONS.keys()))
+            lang_choice = st.selectbox("Preferred Language / Langue / Sprache:", list(TRANSLATIONS.keys()))
             submit_btn = st.form_submit_button("Sign In 🚀", use_container_width=True)
         else:
             st.subheader("Create New Account")
@@ -212,7 +310,7 @@ if not st.session_state.logged_in:
             email_input = st.text_input("Email Address:")
             password_input = st.text_input("Create Password:", type="password")
             role = st.selectbox("Select Role:", ["Smallholder Farmer", "Agricultural Cooperative Manager"])
-            lang_choice = st.selectbox("Preferred Language / भाषा:", list(TRANSLATIONS.keys()))
+            lang_choice = st.selectbox("Preferred Language / Langue / Sprache:", list(TRANSLATIONS.keys()))
             submit_btn = st.form_submit_button("Register & Launch 🚀", use_container_width=True)
 
         if submit_btn:
@@ -233,7 +331,7 @@ lang = TRANSLATIONS.get(st.session_state.get("language", "English"), TRANSLATION
 st.sidebar.markdown("## 🌾 PhytoSpore Edge")
 st.sidebar.info(f"👤 User: **{st.session_state.username}**\n\n🛡️ Role: **{st.session_state.role}**")
 
-# Language Selector
+# Language Selector (7 Languages Supported)
 selected_lang = st.sidebar.selectbox("🌐 Change Language:", list(TRANSLATIONS.keys()), index=list(TRANSLATIONS.keys()).index(st.session_state.get("language", "English")))
 if selected_lang != st.session_state.get("language"):
     st.session_state.language = selected_lang
@@ -400,7 +498,7 @@ elif app_mode == lang["tech"]:
     st.subheader("⚙️ System Architecture & Engineering Specs")
     st.markdown("""
     * **Authentication & Roles:** Secure session-state role division for smallholders and enterprise cooperative managers.
-    * **Localization Engine:** Dynamic multi-language UI dictionaries supporting English, Hindi, and Spanish.
+    * **Localization Engine:** Dynamic multi-language UI dictionaries supporting 7 global languages (English, Hindi, Spanish, German, French, Portuguese, Japanese).
     * **Edge ML Model:** Quantized **YOLOv8s-SPM** model compiled to **TensorFlow Lite (INT8)** format (<8MB footprint).
     * **Data Privacy:** Local encrypted SQLite database storage with asynchronous background sync for aggregate cooperative heatmaps.
     """)
