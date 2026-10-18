@@ -21,15 +21,15 @@ if not st.session_state.app_loaded:
     splash = st.empty()
     with splash.container():
         st.markdown("<h1 style='text-align: center;'>🌾 PhytoSpore Edge</h1>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center; color: gray;'>Offline Edge Mobile Diagnostic Tool</p>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center; color: gray;'>World-Class Offline Agricultural Intelligence</p>", unsafe_allow_html=True)
         
         progress_bar = st.progress(0)
         status_text = st.empty()
         
         loading_steps = [
-            ("Initializing TFLite Quantized Engine...", 0.25),
-            ("Loading CameraX Focus Calibration...", 0.50),
-            ("Mounting Offline Encrypted SQLite Node...", 0.75),
+            ("Optimizing Quantized TFLite Edge Weights...", 0.25),
+            ("Calibrating CameraX Macro Focus Engine...", 0.50),
+            ("Mounting Encrypted Zero-Cloud SQLite Vault...", 0.75),
             ("System Ready.", 1.0)
         ]
         
@@ -45,18 +45,19 @@ if not st.session_state.app_loaded:
 TRANSLATIONS = {
     "English": {
         "title": "🌾 PhytoSpore Edge",
-        "subtitle": "Offline Edge Mobile Diagnostic Tool for Pre-Symptomatic Fungal Spore Detection",
+        "subtitle": "Offline Mobile Diagnostic Tool for Pre-Symptomatic Fungal Spore Detection",
         "scanner": "Field Scanner",
+        "guide": "🌾 Farmer Quick Guide",
         "analysis": "Spore Analysis & Action Plan",
         "history": "Scan History (SQLite)",
         "heatmap": "Cooperative Heatmap",
         "tech": "Technical Architecture",
         "scanner_title": "📷 Adhesive Strip Optical Scanner",
-        "scanner_desc": "Secure your $5 optical macro lens over your smartphone camera, sweep the adhesive tape strip through field air, and upload the image below.",
-        "input_method": "Select Image Input:",
-        "upload_img": "Upload Spore Image",
-        "sample_slide": "Select Sample Field Slide",
-        "choose_sample": "Choose Sample Scenario:",
+        "scanner_desc": "Clip your $5 optical macro lens over your phone camera, sweep the adhesive tape across the crop canopy, and inspect the slide.",
+        "input_method": "Select Image Input Method:",
+        "upload_img": "Upload Microscopic Spore Photo",
+        "sample_slide": "Select Field Slide Scenario",
+        "choose_sample": "Choose Field Scenario:",
         "run_ai": "Run Offline TFLite Spore Detection",
         "analysis_title": "📊 Diagnostic Results & Action Plan",
         "sdi_label": "Spore Density Index (SDI)",
@@ -64,47 +65,49 @@ TRANSLATIONS = {
         "pathogen": "Identified Pathogen Signature:",
         "action": "Recommended Preventative Action:",
         "history_title": "📂 Local Encrypted Scan Logs",
-        "history_desc": "All geotags and scan histories are stored 100% offline in a local SQLite database to protect farm data privacy.",
+        "history_desc": "All records stay 100% offline on your device to protect your farm privacy.",
         "logout": "Log Out"
     },
     "Hindi (हिन्दी)": {
-        "title": "🌾 फाइटोस्पोर एज (PhytoSpore Edge)",
-        "subtitle": "प्री-सिम्प्टोमैटिक फंगल बीजाणु का पता लगाने के लिए ऑफलाइन मोबाइल डायग्नोस्टिक टूल",
+        "title": "🌾 फाइटोस्पोर एज",
+        "subtitle": "फंगल बीजाणु का समय से पहले पता लगाने के लिए ऑफलाइन मोबाइल टूल",
         "scanner": "फील्ड स्कैनर",
+        "guide": "🌾 किसान त्वरित मार्गदर्शिका",
         "analysis": "बीजाणु विश्लेषण और कार्य योजना",
         "history": "स्कैन इतिहास (SQLite)",
         "heatmap": "सहकारी हीटमैप",
         "tech": "तकनीकी वास्तुकला",
         "scanner_title": "📷 एडहेसिव स्ट्रिप ऑप्टिकल स्कैनर",
-        "scanner_desc": "अपने स्मार्टफोन कैमरे पर $5 ऑप्टिकल मैक्रो लेंस लगाएं, हवा में टेप घुमाएं और नीचे छवि अपलोड करें।",
-        "input_method": "छवि इनपुट चुनें:",
-        "upload_img": "बीजाणु छवि अपलोड करें",
+        "scanner_desc": "अपने फोन कैमरे पर $5 मैक्रो लेंस लगाएं, खेत की हवा में टेप घुमाएं और स्लाइड की जांच करें।",
+        "input_method": "छवि इनपुट विधि चुनें:",
+        "upload_img": "बीजाणु की फोटो अपलोड करें",
         "sample_slide": "नमूना फ़ील्ड स्लाइड चुनें",
-        "choose_sample": "नमूना परिदृश्य चुनें:",
+        "choose_sample": "परिदृश्य चुनें:",
         "run_ai": "ऑफ़लाइन TFLite बीजाणु पहचान चलाएं",
         "analysis_title": "📊 नैदानिक परिणाम और कार्य योजना",
         "sdi_label": "बीजाणु घनत्व सूचकांक (SDI)",
         "risk_label": "फसल स्वास्थ्य जोखिम स्तर",
-        "pathogen": "पहचाना गया रोगाणु हस्ताक्षर:",
+        "pathogen": "पहचाना गया रोगाणु:",
         "action": "अनुशंसित निवारक कार्रवाई:",
         "history_title": "📂 स्थानीय एन्क्रिप्टेड स्कैन लॉग",
-        "history_desc": "किसान डेटा गोपनीयता की रक्षा के लिए सभी स्कैन इतिहास 100% ऑफ़लाइन संग्रहीत हैं।",
+        "history_desc": "आपकी गोपनीयता की रक्षा के लिए सभी रिकॉर्ड 100% ऑफ़लाइन संग्रहीत हैं।",
         "logout": "लॉग आउट"
     },
     "Spanish (Español)": {
         "title": "🌾 PhytoSpore Edge",
-        "subtitle": "Herramienta de diagnóstico móvil fuera de línea para la detección presintomática de esporas",
+        "subtitle": "Herramienta móvil offline para la detección presintomática de esporas",
         "scanner": "Escáner de Campo",
-        "analysis": "Análisis de Esporas y Plan de Acción",
+        "guide": "🌾 Guía Rápida para Agricultores",
+        "analysis": "Análisis y Plan de Acción",
         "history": "Historial de Escaneos (SQLite)",
         "heatmap": "Mapa de Calor Cooperativo",
         "tech": "Arquitectura Técnica",
         "scanner_title": "📷 Escáner Óptico de Tira Adhesiva",
-        "scanner_desc": "Coloque su lente macro de $5 sobre la cámara y suba la imagen de la cinta adhesiva.",
-        "input_method": "Seleccionar entrada de imagen:",
-        "upload_img": "Subir imagen de esporas",
+        "scanner_desc": "Coloque su lente macro de $5 sobre la cámara y escanee la tira adhesiva del campo.",
+        "input_method": "Seleccionar método de entrada:",
+        "upload_img": "Subir foto microscópica",
         "sample_slide": "Seleccionar diapositiva de muestra",
-        "choose_sample": "Elija escenario de muestra:",
+        "choose_sample": "Elija escenario:",
         "run_ai": "Ejecutar detección TFLite offline",
         "analysis_title": "📊 Resultados y Plan de Acción",
         "sdi_label": "Índice de Densidad de Esporas (SDI)",
@@ -112,7 +115,7 @@ TRANSLATIONS = {
         "pathogen": "Firma de Patógeno Identificado:",
         "action": "Acción Preventiva Recomendada:",
         "history_title": "📂 Registros de Escaneo Locales",
-        "history_desc": "Todos los historiales se almacenan 100% offline en una base de datos SQLite cifrada.",
+        "history_desc": "Todos los registros se almacenan 100% offline para proteger su privacidad.",
         "logout": "Cerrar Sesión"
     }
 }
@@ -127,15 +130,15 @@ if not st.session_state.logged_in:
         st.markdown("<h1 style='font-size: 60px; margin: 0;'>🌾</h1>", unsafe_allow_html=True)
     with col_title:
         st.title("PhytoSpore Edge")
-        st.caption("Pre-Symptomatic Crop Defense System")
+        st.caption("Pre-Symptomatic Crop Defense System • Zero Cloud, Total Privacy")
 
-    st.subheader("User Authentication & Role Selection")
-
+    st.write("---")
     with st.form("login_form"):
+        st.subheader("🔐 Secure Portal Login")
         username = st.text_input("Enter Farmer Name or Cooperative ID:")
         role = st.selectbox("Select Access Role:", ["Smallholder Farmer", "Agricultural Cooperative Manager"])
-        lang_choice = st.selectbox("Select Preferred Language:", list(TRANSLATIONS.keys()))
-        submit_login = st.form_submit_button("Log In to App")
+        lang_choice = st.selectbox("Select Preferred Language / भाषा:", list(TRANSLATIONS.keys()))
+        submit_login = st.form_submit_button("Launch Application 🚀", use_container_width=True)
 
         if submit_login:
             if username.strip() != "":
@@ -163,11 +166,12 @@ if selected_lang != st.session_state.get("language"):
 
 # Navigation options based on role
 if st.session_state.role == "Smallholder Farmer":
-    app_mode = st.sidebar.radio("Navigation:", [lang["scanner"], lang["analysis"], lang["history"], lang["tech"]])
+    app_mode = st.sidebar.radio("Navigation:", [lang["scanner"], lang["guide"], lang["analysis"], lang["history"], lang["tech"]])
 else:
     app_mode = st.sidebar.radio("Navigation:", [lang["heatmap"], lang["history"], lang["tech"]])
 
-if st.sidebar.button(lang["logout"]):
+st.sidebar.write("---")
+if st.sidebar.button(lang["logout"], use_container_width=True):
     st.session_state.logged_in = False
     st.rerun()
 
@@ -214,7 +218,7 @@ if app_mode == lang["scanner"]:
         sharpness_score = random.randint(82, 96)
         st.success(f"✓ Optical Focus Validated (Laplacian Score: {sharpness_score}/100).")
 
-        if st.button(lang["run_ai"]):
+        if st.button(lang["run_ai"], use_container_width=True):
             with st.spinner("Executing YOLOv8s-SPM model locally (<300ms)..."):
                 time.sleep(0.5)
 
@@ -237,7 +241,33 @@ if app_mode == lang["scanner"]:
                 st.success("Analysis Complete! Head over to the 'Spore Analysis & Action Plan' tab to see your detailed report.")
                 st.balloons()
 
-# --- TAB 2: SPORE ANALYSIS & ACTION PLAN ---
+
+# --- TAB 2: FARMER QUICK GUIDE (WORLD-CLASS UI CARDS) ---
+elif app_mode == lang["guide"]:
+    st.subheader("🌾 Farmer Quick Guide: Field-Ready in 3 Simple Steps")
+    st.write("No internet required. Use this guide right in your field to catch crop diseases days *before* visible leaf spots appear.")
+
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("### Step 1 🔍")
+        st.markdown("**Attach Macro Lens**")
+        st.write("Clip your affordable $5 optical macro lens directly over your smartphone's primary camera lens.")
+    
+    with col2:
+        st.markdown("### Step 2 🌬️")
+        st.markdown("**Air Sweep**")
+        st.write("Wave an adhesive tape strip through your crop canopy to capture invisible airborne fungal spores.")
+
+    with col3:
+        st.markdown("### Step 3 ⚡")
+        st.markdown("**Instant Scan**")
+        st.write("Open this app, snap or upload the slide, and let the offline AI instantly diagnose your crop health risk.")
+
+    st.info("💡 **Pro Tip for Smallholders:** Run tests early in the morning when dew settles or during heavy wind flows for the most accurate spore density readings.")
+
+
+# --- TAB 3: SPORE ANALYSIS & ACTION PLAN ---
 elif app_mode == lang["analysis"]:
     st.subheader(lang["analysis_title"])
 
@@ -256,7 +286,8 @@ elif app_mode == lang["analysis"]:
         st.write(f"🛡️ **{lang['action']}**")
         st.info(latest['action'])
 
-# --- TAB 3: SCAN HISTORY (SQLITE) ---
+
+# --- TAB 4: SCAN HISTORY (SQLITE) ---
 elif app_mode == lang["history"]:
     st.subheader(lang["history_title"])
     st.write(lang["history_desc"])
@@ -264,7 +295,8 @@ elif app_mode == lang["history"]:
     df = pd.DataFrame(st.session_state.scan_history)
     st.dataframe(df, use_container_width=True)
 
-# --- TAB 4: COOPERATIVE HEATMAP (MANAGER ROLE) ---
+
+# --- TAB 5: COOPERATIVE HEATMAP (MANAGER ROLE) ---
 elif app_mode == lang["heatmap"]:
     st.subheader("🗺️ Regional Agricultural Cooperative Heatmap")
     st.write("Aggregated regional spore density data synced from local offline nodes across cooperative member farms.")
@@ -277,7 +309,8 @@ elif app_mode == lang["heatmap"]:
     st.map(map_data)
     st.success("Cooperative network status: 42 active offline nodes reporting.")
 
-# --- TAB 5: TECHNICAL ARCHITECTURE ---
+
+# --- TAB 6: TECHNICAL ARCHITECTURE ---
 elif app_mode == lang["tech"]:
     st.subheader("⚙️ System Architecture & Engineering Specs")
     st.markdown("""
